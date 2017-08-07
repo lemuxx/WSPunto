@@ -50,9 +50,9 @@ public class CrudArticulo {
         query.execute(); 
     }
     
-    public ResultSet cargarArticulo() throws Exception{
+    public ResultSet cargarArticulo(String a) throws Exception{
         Connection connection = cnMySQL.getInstance().getConnection();
-        PreparedStatement query2 = connection.prepareStatement("select * from articulo");
+        PreparedStatement query2 = connection.prepareStatement("select * from articulo WHERE nombre LIKE '%"+a+"%'");
         ResultSet rs = query2.executeQuery();
         return rs;
     }

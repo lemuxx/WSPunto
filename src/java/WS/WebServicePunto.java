@@ -99,7 +99,7 @@ public class WebServicePunto {
     //// Articulo
     
     @WebMethod(operationName = "insertarArticulo")
-    public String insertarArticulo(@WebParam(name = "json") String json) {
+    public boolean insertarArticulo(@WebParam(name = "json") String json) {
         Gson gson = new Gson();
         CrudArticulo db = new CrudArticulo();
         Type tipoObjeto = new TypeToken<List<Articulo>>() {
@@ -108,51 +108,51 @@ public class WebServicePunto {
         Articulo al = art.get(0);
         try {
             db.insertarArticulo(al);
-            return "Articulo registrado";
+            return true;
         } catch (Exception ex) {
-            return "Error al hacer el registro";
+            return false;
         }
     }
     
     @WebMethod(operationName = "modificarArticulo")
-    public String modificarArticulo(@WebParam(name = "json") String json) {
+    public boolean modificarArticulo(@WebParam(name = "json") String json) {
         Gson gson = new Gson();
         CrudArticulo db = new CrudArticulo();
-        Type tipoObjeto = new TypeToken<List<Categoria>>() {
+        Type tipoObjeto = new TypeToken<List<Articulo>>() {
         }.getType();
         ArrayList<Articulo> art = gson.fromJson(json, tipoObjeto);
         Articulo al = art.get(0);
         try {
             db.modificarArticulo(al);
-            return "Articulo modificado";
+            return true;
         } catch (Exception ex) {
-            return "Error al hacer la modificacion";
+            return false;
         }
     }
     
     @WebMethod(operationName = "borrarArticulo")
-    public String borrarArticulo(@WebParam(name = "json") String json) {
+    public boolean borrarArticulo(@WebParam(name = "json") String json) {
         Gson gson = new Gson();
         CrudArticulo db = new CrudArticulo();
-        Type tipoObjeto = new TypeToken<List<Categoria>>() {
+        Type tipoObjeto = new TypeToken<List<Articulo>>() {
         }.getType();
         ArrayList<Articulo> art = gson.fromJson(json, tipoObjeto);
         Articulo al = art.get(0);
         try {
             db.borrarArticulo(al);
-            return "Articulo eliminado";
+            return true;
         } catch (Exception ex) {
-            return "Error al hacer la eliminacion";
+            return false;
         }
     }
     
     @WebMethod(operationName = "cargarArticulo")
-    public String cargarArticulo() {
+    public String cargarArticulo(String a) {
         Gson gson = new Gson();
         ResultSet rs;
         CrudArticulo db = new CrudArticulo();
         try {
-            rs = db.cargarArticulo();
+            rs = db.cargarArticulo(a);
             ArrayList<Articulo> art = new ArrayList();
             Articulo var_temp;
             while (rs.next()) {
