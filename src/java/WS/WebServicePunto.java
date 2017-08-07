@@ -29,7 +29,7 @@ public class WebServicePunto {
     //// Categoria
     
     @WebMethod(operationName = "insertarCategoria")
-    public String insertarCategoria(@WebParam(name = "json") String json) {
+    public boolean insertarCategoria(@WebParam(name = "json") String json) {
         Gson gson = new Gson();
         CrudCategoria db = new CrudCategoria();
         Type tipoObjeto = new TypeToken<List<Categoria>>() {
@@ -38,14 +38,14 @@ public class WebServicePunto {
         Categoria al = cat.get(0);
         try {
             db.insertarCategoria(al);
-            return "Categoria registrada";
+            return true;
         } catch (Exception ex) {
-            return "Error al hacer el registro";
+            return false;
         }
     }
     
     @WebMethod(operationName = "modificarCategoria")
-    public String modificarCategoria(@WebParam(name = "json") String json) {
+    public boolean modificarCategoria(@WebParam(name = "json") String json) {
         Gson gson = new Gson();
         CrudCategoria db = new CrudCategoria();
         Type tipoObjeto = new TypeToken<List<Categoria>>() {
@@ -54,14 +54,14 @@ public class WebServicePunto {
         Categoria al = cat.get(0);
         try {
             db.modificarCategoria(al);
-            return "Categoria modificada";
+            return true;
         } catch (Exception ex) {
-            return "Error al hacer la modificacion";
+            return false;
         }
     }
     
     @WebMethod(operationName = "borrarCategoria")
-    public String borrarCategoria(@WebParam(name = "json") String json) {
+    public boolean borrarCategoria(@WebParam(name = "json") String json) {
         Gson gson = new Gson();
         CrudCategoria db = new CrudCategoria();
         Type tipoObjeto = new TypeToken<List<Categoria>>() {
@@ -70,19 +70,19 @@ public class WebServicePunto {
         Categoria al = cat.get(0);
         try {
             db.borrarCategoria(al);
-            return "Categoria eliminada";
+            return true;
         } catch (Exception ex) {
-            return "Error al hacer la eliminacion";
+            return false;
         }
     }
     
     @WebMethod(operationName = "cargarCategoria")
-    public String cargarCategoria() {
+    public String cargarCategoria(String a) {
         Gson gson = new Gson();
         ResultSet rs;
         CrudCategoria db = new CrudCategoria();
         try {
-            rs = db.cargarCategoria();
+            rs = db.cargarCategoria(a);
             ArrayList<Categoria> cat = new ArrayList();
             Categoria var_temp;
             while (rs.next()) {

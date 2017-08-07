@@ -11,7 +11,7 @@ public class cnMySQL {
      
     public cnMySQL() throws Exception{
         Class.forName("com.mysql.jdbc.Driver");
-        connection = DriverManager.getConnection("jdbc:mysql://192.168.43.109:3306/bddatos","lemus","12345");
+        connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/tienda","root","");
     }
     public static cnMySQL getInstance() throws Exception{
         if(instance == null){

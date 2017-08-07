@@ -21,7 +21,7 @@ public class CrudCategoria {
     
      public void modificarCategoria(Categoria to) throws Exception{
         Connection connection = cnMySQL.getInstance().getConnection();
-        String cate = "update categoria set nombre = ?" + "where id = ? ";
+        String cate = "update categoria set categoria = ?" + "where id = ? ";
         PreparedStatement query = connection.prepareStatement(cate);
         query.setString(1, to.getCategoria());
         query.setInt(2, to.getId());
@@ -36,9 +36,9 @@ public class CrudCategoria {
         query.execute(); 
     }
      
-     public ResultSet cargarCategoria() throws Exception{
+     public ResultSet cargarCategoria(String a) throws Exception{
         Connection connection = cnMySQL.getInstance().getConnection();
-        PreparedStatement query2 = connection.prepareStatement("select * from categoria");
+        PreparedStatement query2 = connection.prepareStatement("select * from categoria WHERE categoria LIKE '%"+a+"%'");
         ResultSet rs = query2.executeQuery();
         return rs;
     }
