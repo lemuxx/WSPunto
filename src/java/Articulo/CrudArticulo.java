@@ -57,4 +57,11 @@ public class CrudArticulo {
         return rs;
     }
     
+    public ResultSet leerCodigo(String codigo) throws Exception{
+        Connection connection = cnMySQL.getInstance().getConnection();
+        PreparedStatement query2 = connection.prepareStatement("select * from articulo WHERE codigo LIKE '%"+codigo+"%'");
+        ResultSet rs = query2.executeQuery();
+        return rs;
+    }
+    
 }

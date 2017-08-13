@@ -167,4 +167,27 @@ public class WebServicePunto {
     }
     
     //// Usuario
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "leerCodigo")
+    public String leerCodigo(@WebParam(name = "codigo") String codigo) {
+        Gson gson = new Gson();
+        ResultSet rs;
+        CrudArticulo db = new CrudArticulo();
+        try {
+            rs = db.leerCodigo(codigo);
+            ArrayList<Articulo> art = new ArrayList();
+            Articulo var_temp;
+            while (rs.next()) {
+                var_temp = new Articulo(parseInt(rs.getString(1)), rs.getString(2), rs.getString(3), parseInt(rs.getString(4)), parseFloat(rs.getString(5)), parseFloat(rs.getString(6)), parseFloat(rs.getString(7)) ,rs.getString(8));
+                art.add(var_temp);
+            }
+            String formatoJSON = gson.toJson(art);
+            return formatoJSON;
+        } catch (Exception ex) {
+            return ex.getMessage();
+        }
+    }
 }
