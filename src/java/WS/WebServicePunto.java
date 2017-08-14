@@ -17,6 +17,8 @@ import java.util.List;
 import javax.jws.WebService;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
+import usuario.CrudUsuario;
+import usuario.Usuario;
 
 
 @WebService(serviceName = "WebServicePunto")
@@ -168,10 +170,74 @@ public class WebServicePunto {
     }
     
     //// Usuario
-
-    /**
-     * Web service operation
-     */
+    
+    @WebMethod(operationName = "insertarUsuario")
+    public boolean insertarUsuario(@WebParam(name = "json") String json) {
+        Gson gson = new Gson();
+        CrudUsuario db = new CrudUsuario();
+        Type tipoObjeto = new TypeToken<List<Usuario>>() {
+        }.getType();
+        ArrayList<Usuario> usu = gson.fromJson(json, tipoObjeto);
+        Usuario al = usu.get(0);
+        try {
+            db.insertarUsuario(al);
+            return true;
+        } catch (Exception ex) {
+            return false;
+        }
+    }
+    @WebMethod(operationName = "modificarUsuario")
+    public boolean modificarUsuario(@WebParam(name = "json") String json) {
+        Gson gson = new Gson();
+        CrudUsuario db = new CrudUsuario();
+        Type tipoObjeto = new TypeToken<List<Usuario>>() {
+        }.getType();
+        ArrayList<Usuario> usu = gson.fromJson(json, tipoObjeto);
+        Usuario al = usu.get(0);
+        try {
+            db.modificarUsuario(al);
+            return true;
+        } catch (Exception ex) {
+            return false;
+        }
+    }
+    @WebMethod(operationName = "borrarUsuario")
+    public boolean borrarUsuario(@WebParam(name = "json") String json) {
+        Gson gson = new Gson();
+        CrudUsuario db = new CrudUsuario();
+        Type tipoObjeto = new TypeToken<List<Usuario>>() {
+        }.getType();
+        ArrayList<Usuario> usu = gson.fromJson(json, tipoObjeto);
+        Usuario al = usu.get(0);
+        try {
+            db.borrarUsuario(al);
+            return true;
+        } catch (Exception ex) {
+            return false;
+        }
+    }
+    
+    @WebMethod(operationName = "cargarUsuario")
+    public String cargarUsuario(String a) {
+        Gson gson = new Gson();
+        ResultSet rs;
+        CrudUsuario db = new CrudUsuario();
+        try {
+            rs = db.cargarUsuario(a);
+            ArrayList<Usuario> usu = new ArrayList();
+            Usuario var_temp;
+            while (rs.next()) {
+                var_temp = new Usuario(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), parseInt(rs.getString(5)),rs.getString(6), rs.getString(7) ,rs.getString(8));
+                usu.add(var_temp);
+            }
+            String formatoJSON = gson.toJson(usu);
+            return formatoJSON;
+        } catch (Exception ex) {
+            return ex.getMessage();
+        }
+    }
+    
+    
     @WebMethod(operationName = "leerCodigo")
     public String leerCodigo(@WebParam(name = "codigo") String codigo) {
         Gson gson = new Gson();
