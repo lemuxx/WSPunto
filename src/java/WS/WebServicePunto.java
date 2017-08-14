@@ -3,6 +3,7 @@ package WS;
 
 import Articulo.Articulo;
 import Articulo.CrudArticulo;
+import Articulo.VentaArticulo;
 import Categoria.Categoria;
 import Categoria.CrudCategoria;
 import com.google.gson.Gson;
@@ -190,4 +191,15 @@ public class WebServicePunto {
             return ex.getMessage();
         }
     }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "realizarVenta")
+    public boolean realizarVenta(@WebParam(name = "id") int id, @WebParam(name = "can") int can) throws Exception {
+        VentaArticulo va=new VentaArticulo();
+        va.venderArticulo(id, can);
+        return true;
+    }
+
 }
